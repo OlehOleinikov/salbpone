@@ -22,7 +22,7 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=[
         'loguru ~= 0.7',
-        'numpy ~= 2',
+        'numpy ~= 2.0',
         'pulp ~=2.8'
     ],
     extras_require={
