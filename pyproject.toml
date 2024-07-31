@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "salbpone"
+dynamic = ["version"]
+description = "Simple Assembly Line Balancing Problem (SALBP-1) solver"
+readme = {file = "README.rst", content-type = "text/x-rst"}
+license = {text = "GNU GPL v3"}
+authors = [
+    {name = "Oleh Oleinikov", email = "oleh.oleynikov@gmail.com"}
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Natural Language :: Ukrainian",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+]
+
+requires-python = ">=3.10"
+
+keywords = [
+    "assembly line balancing",
+    "SALBP-1",
+    "optimization",
+    "linear programming",
+    "operations research",
+    "workstation assignment",
+    "combinatorial optimization"
+]
+
+dependencies = [
+    "PuLP~=2.8.0",
+    "loguru~=0.7.2",
+    "networkx~=3.3",
+    "pyvis~=0.3.2",
+    "numpy~=2.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "jupyter",
+    "sphinx",
+    "sphinx_rtd_theme",
+    "sphinx-copybutton",
+    "sphinx-toggleprompt",
+    "sphinx-automodapi",
+    "readthedocs-sphinx-search",
+    "recommonmark"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/OlehOleinikov/salbone"
+"Documentation" = "https://salbpone.readthedocs.io"
+

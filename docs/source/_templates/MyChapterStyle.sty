@@ -1,0 +1,31 @@
+\usepackage{titlesec}
+\usepackage{xcolor}
+\definecolor{colorchapter}{RGB}{0,0,150}
+
+
+\titleformat{\chapter}[display]
+{\bfseries\Large}
+{\filleft\textcolor{colorchapter}{\MakeUppercase{Розділ} \Huge\thechapter}}
+{2ex}
+{\color{colorchapter}\titlerule
+	\vspace{1ex}%
+	\color{colorchapter}\Huge\filright}
+[\vspace{1ex}%
+\color{colorchapter}\titlerule]
+
+\titlespacing{\chapter}{0cm}{0cm}{1cm}
+
+
+\usepackage{titletoc}
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]{\bfseries\huge\centering}{\partname~\thepart}{10pt}{\titlerule\vspace{3mm}}[\vspace{3mm}\titlerule \vspace{2cm}
+\begin{minipage}{0.6\textwidth}
+\large\startcontents
+\printcontents{}{0}{\setcounter{tocdepth}{0}}
+\end{minipage}
+]
+
+\renewcommand{\literalblockcontinuedname}{Продовження з попвередньої сторінки}
+\renewcommand{\literalblockcontinuesname}{Продовження на наступній сторінці}
+\addto\captionsukrainian{\renewcommand{\figurename}{Мал.\@{} }}

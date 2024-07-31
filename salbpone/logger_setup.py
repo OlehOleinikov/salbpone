@@ -1,16 +1,16 @@
 """
 Модуль налаштувань логера.
 """
-
 from loguru import logger
 import sys
 
 # Форматування повідомлень
 log_format = (
-    "<green>{time:DD.MM.YYYY HH:mm:ss}</green> | "
+    # "<green>{time:DD.MM.YYYY HH:mm:ss}</green> | "
     "<level>{level}</level> | "
     "<level>{message}</level>"
 )
+"""Формат повідомлення логера"""
 
 # Налаштування логера
 logger.remove()
@@ -36,6 +36,13 @@ logger.level("DEBUG", color="<yellow>")
 
 # Логування у разі крашу програми
 def log_exception(exc_type, exc_value, exc_traceback):
+    """
+    Функція перехоплення та логування помилки в разі неочікуваного завершення виконання програми.
+    :param exc_type:
+    :param exc_value:
+    :param exc_traceback:
+    :return:
+    """
     logger.error(f"{exc_type.__name__} - {exc_value}",
                  exc_info=(exc_type, exc_value, exc_traceback))
 

@@ -4,7 +4,8 @@
 import re
 import pulp
 
-from .data_types import OperationsCosts, TimeUnit, GraphDict, ConstraintsGroup, EarliestLatestData, DepPairsSet, PrecedenceDict
+from .data_types import (OperationsCosts, TimeUnit, GraphDict, ConstraintsGroup, EarliestLatestData,
+                         DepPairsSet, PrecedenceDict)
 from .logger_setup import logger
 from .checkers import InputChecker
 from .statement_generator import ExtendStatement
@@ -12,7 +13,55 @@ from .constraints_generator import ConstraintsGenerator
 
 
 class SolverSALBP:
-    """Вирішувач SALBP-1"""
+    """
+    Вирішувач SALBP-1.
+
+    Забезпечує перетворення умови, формування обмежень, вирішення задачі.
+    Для вирішення задачі лінійного програмування виконується код, який генерує змінні,
+    що підлягають оптимізації та цільову функцію, що підлягає мінімізації:
+
+    .. code-block:: python
+
+        # Ініціалізація задачі
+        self.problem = pulp.LpProblem("Binary_Linear_Programming", pulp.LpMinimize)
+
+        # Змінні
+        x = [[pulp.LpVariable(f"x_{i + 1}_{j + 1}", cat="Binary") for j in range(self.n)] for i in range(self.n)]
+        y = [pulp.LpVariable(f"y_{j + 1}", cat="Binary") for j in range(self.n)]
+
+        # Цільова функція
+        self.problem += eval(self.adjust_indices(self.objective_function))
+
+        # Обмеження
+        for constraint in self.constraints:
+            self.problem += eval(self.adjust_indices(constraint))
+
+        # Запуск оптимізації
+        self.problem.solve()
+
+
+    За результатами роботи може бути:
+
+    - "Знайдено оптимальне рішення" (з відображенням матриці призначення та навантаження станцій)
+    - повідомлення "Задачу не вирішено" (з описом причин помилки)
+    - "Рішення не існує"
+    - "Лише рішення поза обмеженнями!" (з описом похибки та критеріїв, які не вдалось досягнути)
+    - "Задача не формалізована, перевірте умову" (в разі порушення формулювання задачі, є непередбаченої помилкою)
+
+    :param operations_costs: Тривалість операцій
+    :type operations_costs: OperationsCosts
+
+    :param precedence_graph: Граф залежностей операцій
+    :type precedence_graph: GraphDict
+
+    :param cycle_time: Тривалість виробничого циклу
+    :type cycle_time: TimeUnit
+
+    :param verbose: Режим деталізованого логування
+    :type verbose: bool
+
+
+    """
     def __init__(self,
                  operations_costs: OperationsCosts,
                  precedence_graph: GraphDict,
@@ -86,55 +135,82 @@ class SolverSALBP:
                 else:
                     vals.append(' ')
             text = ' | '.join(vals)
-            logger.success(f"t{pos+1}: | {text}")
+            logger.success(f"t{pos+1:02d}: | {text}")
 
         # Виведення сум значень по кожній колонці з врахуванням масиву t
         print('')
+        stations_on = 0
         logger.success("Завантаження станцій:")
         column_sums = [sum(self.t[i] * x_matrix[i][j] for i in range(self.n)) for j in range(self.n)]
         for idx, col_sum in enumerate(column_sums):
             logger.success(f"Станція J{idx + 1}: {col_sum}")
+            if col_sum > 0:
+                stations_on += 1
 
         # Кількість увімкнених станцій
         print('')
-        y_values = [pulp.value(y[j]) if pulp.value(y[j]) is not None else 1.0 for j in range(self.n)]
-        logger.success(f"Увімкнені станції: {int(sum(y_values))}\n", )
+        logger.success(f"Увімкнені станції: {stations_on}\n", )
 
     @property
     def E(self) -> EarliestLatestData:
+        """
+        Масив найранішніх станцій (для кожної операції)
+        """
         return self.extend_statement.E
 
     @property
     def L(self) -> EarliestLatestData:
+        """
+        Масив найпізніших станцій (для кожної операції)
+        """
         return self.extend_statement.L
 
     @property
     def P(self) -> DepPairsSet:
+        """
+        Пари залежностей (перевіряєма операція та операція, яка має передувати)
+        """
         return self.extend_statement.P_pairs
 
     @property
     def ST(self) -> PrecedenceDict:
+        """
+        Множина операцій, яка має передувати перевіряємій (по всьому графу)
+        """
         return self.extend_statement.ST
 
     @property
     def PT(self) -> PrecedenceDict:
+        """
+        Множина операцій, яка залежить від перевіряємої (по всьому графу)
+        """
         return self.extend_statement.PT
 
     @property
     def m_min(self) -> int:
+        """
+        Теоретична мінімальна кількість станцій, яка забезпечить виконання задачі
+        """
         return self.extend_statement.m_min
 
     @property
     def m_max(self) -> int:
+        """
+        Теоретична максимальна кількість станцій, яка може бути у гіршому випадку
+        """
         return self.extend_statement.m_max
 
     @property
     def constraints(self) -> ConstraintsGroup:
+        """
+        Список з виразами обмежень (рівності та нерівності)
+        """
         return self.constraints_generator.constraints
 
     @staticmethod
     def generate_objective_function(m_min: int, m_max: int) -> str:
         """
+        Допоміжна статична функція.
         Генерує цільову функцію для задачі балансування збиральної лінії.
 
         :param m_min: Мінімальна (теоретична) кількість робочих станцій
@@ -149,10 +225,11 @@ class SolverSALBP:
     @staticmethod
     def adjust_indices(expression):
         """
+        Допоміжна статична функція.
         Отримує рядок, який описує обмеження чи функцію, які містять індекси змінних.
         Зменшує індекс на 1, щоб досягти перетворення з людського відображення індексів на індекси списків Python.
         :param expression: рядок з формулюванням обмеження чи функції
-        :return: рядок з формулюванням обмеження чи функції зі зменшеними індексами змінних
+        :return: рядок з формулюванням обмеження (чи функції) зі зменшеними індексами змінних
         """
         def replacer(match):
             # Заміна x[i][j] і y[j] індексів
@@ -160,11 +237,3 @@ class SolverSALBP:
             return f"{var}[{int(i) - 1}][{int(j) - 1}]" if j else f"{var}[{int(i) - 1}]"
 
         return re.sub(r'([xy])\[(\d+)\](?:\[(\d+)\])?', replacer, expression)
-
-
-
-
-
-
-
-
