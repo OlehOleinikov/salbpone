@@ -1,7 +1,7 @@
 import datetime
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../salbpone'))
+sys.path.insert(0, os.path.abspath('../../salbpone'))
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath('../salbpone'))
 project = 'Пакет вирішення задачі збиральної лінії SALBP-1'
 copyright = '2024, Олег Олейніков'
 author = 'Олег Олейніков'
-release = '24.7.4'
+release = '24.7.5'
 today = datetime.date.today().strftime('%d.%m.%Y')
 
 # -- General configuration ---------------------------------------------------

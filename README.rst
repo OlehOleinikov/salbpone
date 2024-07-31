@@ -3,7 +3,7 @@ SALBP-1 solver
 ======================
 
 .. image:: https://img.shields.io/badge/Документація-Read%20the%20Docs-magenta
-   :target: https://salbone.readthedocs.io/en/latest/
+   :target: https://salbpone.readthedocs.io/en/latest/
    :alt: Документація
 
 .. image:: https://img.shields.io/badge/PyPI-сайт-blue
@@ -15,7 +15,7 @@ SALBP-1 solver
    :alt: Репозиторій проєкту
 
 
-- `Документація <https://salbone.readthedocs.io/en/latest/>`_ (посібник користувача та первинний код)
+- `Документація <https://salbpone.readthedocs.io/en/latest/>`_ (посібник користувача та первинний код)
 - `Сторінка <https://pypi.org/project/salbpone/>`_ Python index.
 - `Репозиторій  <https://pypi.org/project/salbpone/>`_ проєкту.
 
