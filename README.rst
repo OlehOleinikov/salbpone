@@ -15,9 +15,11 @@ SALBP-1 solver
    :alt: Репозиторій проєкту
 
 
-- `Документація <https://salbpone.readthedocs.io/en/latest/>`_ (посібник користувача та первинний код)
+- `Документація <https://salbone.readthedocs.io/en/latest/>`_ (посібник користувача та первинний код)
+- `Приклад <https://salbone.readthedocs.io/en/latest/handbook.html>`_ використання
+- `Математична модель <https://salbone.readthedocs.io/en/latest/mathmodel.html>`_
 - `Сторінка <https://pypi.org/project/salbpone/>`_ Python index.
-- `Репозиторій  <https://pypi.org/project/salbpone/>`_ проєкту.
+- `Репозиторій  <https://github.com/OlehOleinikov/salbpone>`_ проєкту.
 
 .. code-block:: shell
 
