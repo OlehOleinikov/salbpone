@@ -1,4 +1,4 @@
-__version__ = '24.7.3'
+__version__ = '24.7.4'
 
 from .solver import SolverSALBP
 from .latex_converter import LatexConverter

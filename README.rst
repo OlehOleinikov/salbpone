@@ -1,7 +1,27 @@
-# SALBP-1 solver
 
 SALBP-1 solver
 ======================
+
+.. image:: https://img.shields.io/badge/Документація-Read%20the%20Docs-magenta
+   :target: https://salbone.readthedocs.io/en/latest/
+   :alt: Документація
+
+.. image:: https://img.shields.io/badge/PyPI-сайт-blue
+   :target: https://pypi.org/project/salbpone/
+   :alt: Сторінка Python index
+
+.. image:: https://img.shields.io/badge/GitHub-репозиторій-cyan
+   :target: https://github.com/OlehOleinikov/salbpone
+   :alt: Репозиторій проєкту
+
+
+- `Документація <https://salbone.readthedocs.io/en/latest/>`_ (посібник користувача та первинний код)
+- `Сторінка <https://pypi.org/project/salbpone/>`_ Python index.
+- `Репозиторій  <https://pypi.org/project/salbpone/>`_ проєкту.
+
+.. code-block:: shell
+
+    pip install salbpone
 
 TL;DR
 ----------------

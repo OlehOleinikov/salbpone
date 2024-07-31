@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath('../salbpone'))
 project = 'Пакет вирішення задачі збиральної лінії SALBP-1'
 copyright = '2024, Олег Олейніков'
 author = 'Олег Олейніков'
-release = '24.7.3'
+release = '24.7.4'
 today = datetime.date.today().strftime('%d.%m.%Y')
 
 # -- General configuration ---------------------------------------------------
@@ -32,7 +32,7 @@ extensions.append('sphinx.ext.doctest')
 extensions.append('sphinx.ext.intersphinx')
 
 # Підтримка роботи з markdown розміткою (не тільки RST)
-extensions.append('myst_parser')
+# extensions.append('myst_parser')
 
 # Можливість використання розмітки - "Google-style docstrings"
 extensions.append('sphinx.ext.napoleon')
