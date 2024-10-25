@@ -3,7 +3,7 @@ SALBP-1 solver
 ======================
 
 .. image:: https://img.shields.io/badge/Документація-Read%20the%20Docs-magenta
-   :target: https://salbpone.readthedocs.io/en/latest/
+   :target: https://salbone.readthedocs.io/en/latest/
    :alt: Документація
 
 .. image:: https://img.shields.io/badge/PyPI-сайт-blue
